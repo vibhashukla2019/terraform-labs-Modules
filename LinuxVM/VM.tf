@@ -14,7 +14,6 @@ resource "azurerm_virtual_machine" "la_web" {
     sku       = "16.04-LTS"
     version   = "latest"
   }
-
   storage_os_disk {
     name          = "osdisk-1"
     vhd_uri       = "${azurerm_storage_account.la_storage.primary_blob_endpoint}${azurerm_storage_container.la_cont.name}/osdisk-1.vhd"
@@ -54,22 +53,13 @@ resource "azurerm_virtual_machine" "la_db" {
     sku       = "16.04-LTS"
     version   = "latest"
   }
-
-  storage_os_disk {
+   storage_os_disk {
     name          = "osdisk-2"
     vhd_uri       = "${azurerm_storage_account.la_storage.primary_blob_endpoint}${azurerm_storage_container.la_cont.name}/osdisk-2.vhd"
     caching       = "ReadWrite"
     create_option = "FromImage"
   }
 
-  # Optional data disks
-  storage_data_disk {
-    name          = "datadisk-2"
-    vhd_uri       = "${azurerm_storage_account.la_storage.primary_blob_endpoint}${azurerm_storage_container.la_cont.name}/datadisk-2.vhd"
-    disk_size_gb  = "100"
-    create_option = "Empty"
-    lun           = 0
-  }
 
   os_profile {
     computer_name  = "ubuntudb"
